@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="dist/css/bootstrap.min.css">
+    <title>ajout-ec</title>
+</head>
+<body>
+    <div class="container">
+         <h2>Ajout de Matiere</h2>
+    <form action="" class="formulaire my3">
+        <div class="form-group my3">
+            <label for="nom">Nouvelle Matiere</label>
+            <input type="number" class="form-control" id="codeec">
+        </div>
+        <div class="form-group my3">
+            <label for="nom">LIbellé</label>
+            <input type="text" class="form-control" id="libelle">
+        </div>
+        <div class="form-group my3">
+            <label for="nom">Coefficient</label>
+            <input type="number" class="form-control" id="coeff">
+        </div>
+    </form><br>
+    <button class="btn btn-primary submit">Ajouter</button>
+</div>
+
+    <script>
+        submit = document.querySelector(".submit")
+        submit.addEventListener("click", function(){
+            submit.setAttribute("disabled", true)
+            fetch("http://127.0.0.1:3000/ec",{
+                headers : {
+                    "Content-type" : "application/json"
+                },
+                method : "POST",
+                body:JSON.stringify({
+                    CodeEC: parseInt(document.querySelector("#codeec").value),
+                    Libelle: document.querySelector("#libelle").value,
+                    Coefficient: parseInt(document.querySelector("#coeff").value),
+                })     
+            }).then(response => response.json())
+            .then(json =>{
+                console.log(json)
+                alert(`Nouveau EC ajouté avec succès sous`)
+            })
+            .catch(error => console.log(error))
+                submit.setAttribute("disabled", false)
+        })
+    </script>
+</body>
+
+</html>

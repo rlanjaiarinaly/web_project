@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="dist/css/bootstrap.min.css">
+    <title>Liste des etudiants</title>
+</head>
+<body>
+    <style>
+        .barre{
+            display: flex;
+        }
+        .op{
+            width: 25px;
+            height: 25px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .op_cell {
+            display: flex;
+            justify-content: space-evenly;
+        }
+        .studentInfos{
+            display: flex;
+            justify-content: space-between;
+        }
+        .studentInfos .notes {
+            width: 60%;
+            background-color: rgb(196, 190, 190);
+        }
+        .studentInfos table {
+            text-align: center;
+        }
+    </style>
+    <div class="container">
+        <h3>Liste des Etudiants</h3>
+        <div class="barre">
+            <select name="niveau" id="niveau" class="form-select">
+                <option value="">Selectionner Niveau</option>
+                <option value="L1">L1</option>
+                <option value="L2">L2</option>
+                <option value="L3">L3</option>
+                <option value="M1">M1</option>
+                <option value="M2">M2</option>
+            </select>
+            <button class="btn btn-info mx-3 reload">Rafraîchir</button>
+        </div>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Matricule</th>
+                    <th>Nom et Prenoms</th>
+                    <th>Sexe</th>
+                    <th>Adresse</th>
+                    <th>Niveau</th>
+                    <th>Annee</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+
+            </tbody>
+        </table>
+        <div class="modal fade" tabindex="-1" id="updateModal">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title">Etudiant Numero <span id="matricule"></span></h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group my-3">
+                            <label for="nom">Nom</label>
+                            <input type="text" class="form-control" id="nom">
+                        </div>
+                        <div class="form-group my-3">
+                            <label for="adresse">Adresse</label>
+                            <input type="text" class="form-control" id="adresse">
+                        </div>
+                        <select name="niveau" id="niveau" class="form-select my-3">
+                            <option value="L1">L1</option>
+                            <option value="L2">L2</option>
+                            <option value="L3">L3</option>
+                            <option value="M1">M1</option>
+                            <option value="M2">M2</option>
+                        </select>
+                        <div class="form-group my-3">
+                            <label for="annee">Annee</label>
+                            <input type="number" id="annee" class="form-control">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                  <button type="button" class="btn btn-primary" id="submit" data-bs-dismiss="modal">Save changes</button>
+                </div>
+              </div>
+            </div>
+        </div>
+        <div class="modal fade" id="infoModal">
+            <div class="modal-dialog modal-xl">
+                <div class="modal-content">
+                    <div class="modal-header">
+                  <h5 class="modal-title">Etudiant Numero <span class="matricule"></span></h5>
+                  
+                </div>
+                <div class="modal-body">
+                    <div class="studentInfos">
+                        <div class="perso">
+                            <p><strong>Nom :</strong> <span class="nom"></span></p>
+                            <p><strong>Adresse :</strong> <span class="adresse"></span></p>
+                            <p><strong>Niveau :</strong> <span class="niveau"></span></p>
+                            <p><strong>Annee :</strong> <span class="annee"></span></p>
+                        </div>
+                        <div class="notes">
+                            <table class="table table-striped">
+                                <thead>
+                                    <th>Matiere</th>
+                                    <th>Note</th>
+                                    <th>Coefficient</th>
+                                </thead>
+                                <tbody>
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#insertNote" data-bs-dismiss="modal">Ajouter Note</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>    
+            </div>
+            </div>
+        </div>
+        <div class="modal fade" id="insertNote">
+            <div class="modal-dialog modal-sm">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Inserer Note</h5>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <select name="matiere" id="matiere" class="form-select">
+                                <option value="">Selectionner Matiere</option>
+                            </select>
+                            <div class="form-group">
+                                <label for="note">Note</label>
+                                <input type="number" class="form-control" id="note">
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-primary" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#infoModal" id="valider">Valider</button>
+                        <button class="btn btn-secondary" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#infoModal">Annuler</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+          
+    </div>
+    <script src="dist/js/bootstrap.min.js"></script>
+    <script>
+        var url = "http://127.0.0.1:3000/student"
+        const fetcher = function(url){
+            fetch(url)
+            .then(response => response.json())
+            .then(json => {
+                tbody = document.querySelector("tbody")
+                tbody.innerHTML = ""
+                json.forEach(student => {
+                    tr = "<tr>"
+                    tr += `<th> ${student.matricule}</th>`
+                    tr += `<td>${student.nom}</td>`
+                    tr += `<td>${student.sexe}</td>`
+                    tr += `<td>${student.adresse}</td>`
+                    tr += `<td>${student.niveau}</td>`
+                    tr += `<td>${student.annee}</td>`
+                    tr += `<td class="op_cell" id="${student.matricule}"><a class="btn btn-danger deleteStudent op" >&times;</a> <a class="btn btn-warning editStudent op" data-bs-toggle="modal" data-bs-target="#updateModal">e</a> <a class="btn btn-info infoStudent op"data-bs-toggle="modal" data-bs-target="#infoModal">i</a> </td>`
+                    tr += "</tr>"
+                    tbody.innerHTML += tr
+                });
+                const del = document.querySelectorAll(".deleteStudent")
+                del.forEach(btn => {
+                    btn.addEventListener('click', function(e){
+                        const id = e.target.parentNode.id
+                        const yes = confirm("Voulez vous vraiment supprimer cet etudiant ? ")
+                        if (yes) {
+                            fetch("http://127.0.0.1:3000/student/"+id, {
+                                method : "DELETE"
+                            }).then(response => {
+                                fetcher("http://127.0.0.1:3000/student")
+                            })
+                        }
+                    })
+                })
+                 const edit = document.querySelectorAll(".editStudent")
+                 edit.forEach(btn => {
+                     btn.addEventListener("click",function(e){
+                        const id = e.target.parentNode.id
+                        fetch("http://127.0.0.1:3000/student/"+id)
+                        .then(response => response.json())
+                        .then(student => {
+                            document.querySelector("#matricule").innerHTML = student.matricule
+                            document.querySelector("#nom").value = student.nom
+                            document.querySelector("#adresse").value = student.adresse
+                            document.querySelector("#annee").value = student.annee
+                        }).then(() => {
+                            document.querySelector("#submit").addEventListener("click",function(){
+                                fetch("http://127.0.0.1:3000/student/"+id, {
+                                    method: "PUT",
+                                    headers : {
+                                        "Content-type" : "application/json"
+                                    },
+                                    body : JSON.stringify({
+                                        nom : document.querySelector("#nom").value,
+                                        adresse : document.querySelector("#adresse").value,
+                                        niveau : document.querySelector("#niveau").value,
+                                        annee : parseInt(document.querySelector("#annee").value)
+                                    })
+                                }).then(res => {
+                                    student = res.json()
+                                    fetcher("http://127.0.0.1:3000/student")
+                                    //document.querySelector("#updateModal").hide()
+                                }).catch(err => console.log(err))
+                            })
+                        })
+                        
+                     })
+                 })
+
+                 const info = document.querySelectorAll(".infoStudent")
+                 info.forEach(btn => {
+                    btn.addEventListener("click", function(e){
+                        const id = e.target.parentNode.id
+                        fetch("http://127.0.0.1:3000/student/"+id)
+                        .then(response => response.json())
+                        .then(student => {
+                            document.querySelector("span.matricule").innerHTML = student.matricule
+                            document.querySelector("span.nom").innerHTML = student.nom
+                            document.querySelector("span.adresse").innerHTML = student.adresse
+                            document.querySelector("span.annee").innerHTML = student.annee
+                            document.querySelector("span.niveau").innerHTML = student.niveau
+                        })
+                    })
+                 })
+                 const fetchNote = (id)=>{
+                    fetch("http://127.0.0.1:3000/note/student/"+id)
+                    .then(res => res.json())
+                    .then(notes => {
+                        const tbody = document.querySelector(".notes table tbody")
+                        tbody.innerHTML = ""    
+                        notes.forEach(note => {
+                            tr = "<tr>"
+                            tr += `<td>${note.EC.libelle}</td>`
+                            tr += `<td>${note.note}</td>`
+                            tr += `<td>${note.EC.coefficient}</td>`
+                            tr += `<td><a class="btn btn-danger deleteNote op" id="${note.id}">&times;</a></td>`
+                            tr+= "</tr>"
+                            tbody.innerHTML += tr
+                        })
+                    })
+                 }
+                 document.querySelector("#infoModal").addEventListener("shown.bs.modal", function(e){
+                    const id = document.querySelector(".matricule").innerHTML
+                    fetch("http://127.0.0.1:3000/note/student/"+id)
+                    .then(res => res.json())
+                    .then(notes => {
+                        const tbody = document.querySelector(".notes table tbody")
+                        tbody.innerHTML = ""    
+                        notes.forEach(note => {
+                            tr = "<tr>"
+                            tr += `<td>${note.EC.libelle}</td>`
+                            tr += `<td>${note.note}</td>`
+                            tr += `<td>${note.EC.coefficient}</td>`
+                            tr += `<td><a class="btn btn-danger deleteNote op" id="${note.id}">&times;</a></td>`
+                            tr+= "</tr>"
+                            tbody.innerHTML += tr
+                        })
+                        const deleteNote = document.querySelectorAll(".deleteNote")
+                        deleteNote.forEach(btn => {
+                        btn.addEventListener("click",function(e){
+                            const noteID = e.target.id
+                            const yes = confirm("Voulez-vous vraiment supprimer cette note ? ")
+                            if (yes) {
+                                fetch("http://127.0.0.1:3000/note/"+noteID, {
+                                    method : "DELETE"
+                                }).then(response => {
+                                    alert("Note supprime avec succes")
+                                    fetchNote(id)
+                                })
+                            }
+                        })
+                    })
+                    })
+                 })
+
+                 
+
+                 document.querySelector("#insertNote").addEventListener("shown.bs.modal", function(){
+                    document.querySelector("#note").value = ""
+                    const matiereSelect = document.querySelector("#matiere")
+                    matiereSelect.innerHTML = "<option value=\"\">Selectionner Matiere</option>"
+                    fetch("http://127.0.0.1:3000/ec")
+                    .then(response => response.json())
+                    .then(json => {
+                        const matieres = json
+                        matieres.forEach(matiere => {
+                            const option = document.createElement("option")
+                            option.value = matiere.codeEC
+                            option.innerHTML = matiere.libelle
+                            matiereSelect.appendChild(option)
+                        })
+                    })
+                 })
+                 const valider = document.querySelector("#valider")
+                 valider.addEventListener("click", function(e){
+                    const matricule = parseInt(document.querySelector(".matricule").innerHTML)
+                    const codeC = parseInt(document.querySelector("#matiere").value)
+                    const note = parseFloat(document.querySelector("#note").value)
+                    if (isNaN(codeC) ){
+                        alert("Matiere invalide")
+                    }else if(note< 0) {
+                        alert("note invalide")
+                    }else{
+                        fetch("http://127.0.0.1:3000/note", {
+                            method: "POST",
+                            headers: {
+                                "Content-type" : "application/json"
+                            },
+                            body : JSON.stringify({
+                                codeEC : codeC,
+                                matricule : matricule,
+                                note: note
+                            })
+                        }).then(res => console.log(res.json())).catch(err => console.log(err))
+                    }
+                 })
+            })
+        }
+        fetcher(url)
+
+        const reload = document.querySelector(".reload")
+        reload.addEventListener("click", function(){
+            select = document.querySelector("select")
+            if(select.value != "") {
+                url = `http://127.0.0.1:3000/student/niveau/${select.value}`
+                fetcher(url)
+            }else{
+                fetcher("http://127.0.0.1:3000/student")
+            }
+        })
+
+        </script>
+</body>
+</html>

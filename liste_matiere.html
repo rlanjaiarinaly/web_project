@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="dist/css/bootstrap.min.css">
+    <title>liste_matiere</title>
+</head>
+<body>
+    <div class="container">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Matiere</th>
+                    <th>Libelle</th>
+                    <th>Coefficient</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+    </div>
+    <script>
+        var url = "http://127.0.0.1:3000/ec"
+        const fetcher = function(url){
+            fetch(url)
+            .then(response => response.json())
+            .then(json => {
+                tbody = document.querySelector("tbody")
+                tbody.innerHTML = ""
+                json.forEach(ec => {
+                    tr = "<tr>"
+                    tr += `<th> ${ec.codeEC}</th>`
+                    tr += `<td>${ec.libelle}</td>`
+                    tr += `<td>${ec.coefficient}</td>`
+                    tr += `<td class="op_cell"><a class="btn btn-danger deleteEC op" id="${ec.codeEC}">&times;</a> <a class="btn btn-warning edit op">e</a></td>`
+                    tr += "</tr>"
+                    tbody.innerHTML += tr
+                });
+                const del = document.querySelectorAll(".deleteEC")
+                del.forEach(btn => {
+                    btn.addEventListener('click', function(e){
+                        const id = e.target.id
+                        const yes = confirm("Voulez vous vraiment supprimer cette matière ? ")
+                        if (yes) {
+                            fetch("http://127.0.0.1:3000/ec/"+id, {
+                                method : "DELETE"
+                            }).then(response => {
+                                fetcher("http://127.0.0.1:3000/ec")
+                            })
+                        }
+                    })
+                })
+            })
+        }
+        fetcher(url)
+    </script>
+</body>
+</html>

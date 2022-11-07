@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="dist/css/bootstrap.min.css">
+    <title> ajout-etudiants</title>
+</head>
+<body>
+    <div class="container">
+        <h2>Formulaire d'Inscription</h2>
+        <form action="" class="formulaire my-3">
+            <div class="form-group my-3">
+                <label for="nom">Nom </label>
+                <input type="text" class="form-control" id="nom">
+            </div>
+            <div class="form-group my-3">
+                <label for="nom">Adresse </label>
+                <input type="text" class="form-control" id="adresse">
+            </div>
+            <div class="radio">
+                Sexe : 
+                <div class="form-check form-check-inline my-3">
+                    <input class="form-check-input sexe" type="radio" name="sexe" id="sexe1" value="M" checked>
+                    <label class="form-check-label" for="sexe1">
+                      Homme
+                    </label>
+                </div>
+                <div class="form-check form-check-inline my-3">
+                    <input class="form-check-input sexe" type="radio" name="sexe" id="sexe2" class="sexe" value="F">
+                    <label class="form-check-label" for="sexe2">
+                      Femme
+                    </label>
+                </div>
+            </div> 
+            <select name="niveau" id="niveau" class="form-select my-3">
+                <option >Niveau</option>
+                <option value="L1">L1</option>
+                <option value="L2">L2</option>
+                <option value="L3">L3</option>
+                <option value="M1">M1</option>
+                <option value="M2">M2</option>
+            </select>
+            <div class="form-group my-3">
+                <label for="annee">Annee</label>
+                <input type="number" class="form-control" id="annee">
+            </div>
+        </form>
+        <button class="btn btn-primary submit">Ajouter</button>
+    </div>
+    <script>
+        submit = document.querySelector(".submit")
+        submit.addEventListener("click", function(){
+            submit.setAttribute("disabled", true)
+            fetch("http://127.0.0.1:3000/student",{
+                headers : {
+                    "Content-type" : "application/json"
+                },
+                method : "POST",
+                body:JSON.stringify({
+                    nom : document.querySelector("#nom").value,
+                    adresse: document.querySelector("#adresse").value,
+                    niveau : document.querySelector("#niveau").value,
+                    annee : parseInt(document.querySelector("#annee").value),
+                    sexe : document.querySelector(".sexe").value
+                })     
+            }).then(response => response.json())
+            .then(json =>alert(`Nouveau étudiant ajouté avec succès sous le numero ${json.matricule}`))
+            .catch(error => console.log(error))
+                submit.setAttribute("disabled", false)
+        })
+    </script>
+</body>
+</html>
